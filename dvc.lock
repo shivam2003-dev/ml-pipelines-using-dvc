@@ -3,14 +3,18 @@ stages:
   data_ingestion:
     cmd: .venv/bin/python src/data_ingestion.py
     deps:
+    - path: params.yml
+      hash: md5
+      md5: 79ca9565b03920cab72ba1c3ca117469
+      size: 399
     - path: src/data_ingestion.py
       hash: md5
-      md5: 035e33858b30808f550511501999b916
-      size: 749
+      md5: 7758e0b926e9cd75e734fa89a6b6bcc0
+      size: 3648
     outs:
     - path: data/raw
       hash: md5
-      md5: 6d7c9717b531961233cd66af69381384.dir
+      md5: 460a2175ef5ab43436eea9cafa8b3240.dir
       size: 817597
       nfiles: 2
   data_preprocess:

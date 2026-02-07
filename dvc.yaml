@@ -3,6 +3,7 @@ stages:
     cmd: .venv/bin/python src/data_ingestion.py
     deps:
     - src/data_ingestion.py
+    - params.yml
     outs:
     - data/raw
   data_preprocess:
