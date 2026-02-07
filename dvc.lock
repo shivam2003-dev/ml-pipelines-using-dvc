@@ -1,0 +1,101 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: .venv/bin/python src/data_ingestion.py
+    deps:
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 035e33858b30808f550511501999b916
+      size: 749
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 6d7c9717b531961233cd66af69381384.dir
+      size: 817597
+      nfiles: 2
+  data_preprocess:
+    cmd: .venv/bin/python src/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 6d7c9717b531961233cd66af69381384.dir
+      size: 817597
+      nfiles: 2
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 44cb0a4cc783574fcff940f463387c0a
+      size: 2638
+    outs:
+    - path: data/preprocessed
+      hash: md5
+      md5: 70509827fb9a55c039af74b279984066.dir
+      size: 555834
+      nfiles: 2
+  feature_engineering:
+    cmd: .venv/bin/python src/feature_engineering.py
+    deps:
+    - path: data/preprocessed
+      hash: md5
+      md5: 70509827fb9a55c039af74b279984066.dir
+      size: 555834
+      nfiles: 2
+    - path: params.yml
+      hash: md5
+      md5: 09de6a74319dab025d44585ff7f7738c
+      size: 116
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: eec2a0fbd044a636763acd622de21cf6
+      size: 1380
+    outs:
+    - path: data/features
+      hash: md5
+      md5: 6392a18f76d9dbc7cca6b97ecf5929f1.dir
+      size: 1058440
+      nfiles: 2
+  model_training:
+    cmd: .venv/bin/python src/model_building.py
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 6392a18f76d9dbc7cca6b97ecf5929f1.dir
+      size: 1058440
+      nfiles: 2
+    - path: params.yml
+      hash: md5
+      md5: 09de6a74319dab025d44585ff7f7738c
+      size: 116
+    - path: src/model_building.py
+      hash: md5
+      md5: f8b3fac734d5acc0ed3a3b6dde7c6906
+      size: 799
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 4da8fcd331db17807d59e48ff2d31021
+      size: 76984
+  model_evaluation:
+    cmd: .venv/bin/python src/model_evaluation.py
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 6392a18f76d9dbc7cca6b97ecf5929f1.dir
+      size: 1058440
+      nfiles: 2
+    - path: models/model.joblib
+      hash: md5
+      md5: 4da8fcd331db17807d59e48ff2d31021
+      size: 76984
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: e5df81087e8f1993426c71723b019090
+      size: 1145
+    outs:
+    - path: reports/classification_report.txt
+      hash: md5
+      md5: 26b08ffd15c8be7157225ddfe6a08af0
+      size: 326
+    - path: reports/metrics.json
+      hash: md5
+      md5: 3f3ce785346320a68ce259a7ee6ae5de
+      size: 171

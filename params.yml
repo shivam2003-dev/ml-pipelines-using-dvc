@@ -1,0 +1,7 @@
+feature_engineering:
+  max_features: 50
+
+model_training:
+  n_estimators: 50
+  learning_rate: 0.1
+  random_state: 42
